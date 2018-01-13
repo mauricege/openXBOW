@@ -87,17 +87,17 @@ public class Reader {
                         if (bDataSection) {
                             readDataLine(inputData, thisLine.split(","), attributes.getNumAttributes(), ",");
                         }
-                        else if (thisLine.startsWith("@relation") && thisLine.length() > 10) {
+                        else if ((thisLine.startsWith("@relation") || thisLine.startsWith("@RELATION"))  && thisLine.length() > 10) {
                             relation = thisLine.substring(10,thisLine.length());
                         }
-                        else if (thisLine.startsWith("@attribute") && thisLine.length() > 11) {
+                        else if ((thisLine.startsWith("@attribute") || thisLine.startsWith("@ATTRIBUTE")) && thisLine.length() > 11) {
                             if (!attributes.areAttributesSpecified()) {
                                 String[] dataLine = thisLine.split(" ");
                                 attributes.addAttributeARFF(dataLine,bTimeStamp);
                             }
                             checkNumAttributes++;
                         }
-                        else if (thisLine.startsWith("@data")) {
+                        else if (thisLine.startsWith("@data") || thisLine.startsWith("@DATA")) {
                             bDataSection = true;
                             if (attributes.areAttributesSpecified() && (checkNumAttributes != attributes.getNumAttributes())) {
                                 System.err.println("Error: Specified number of attributes does not conform to the number in the input file.");
